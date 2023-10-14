@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 
 const BookAdd = () => {
+  const [bookInfo, setBookInfo] = useState({});
+
   return (
     <div className="p-4 overflow-hidden bg-white shadow-cardShadow rounded-md">
       <h4 className="mb-8 text-xl font-bold text-center">Add New Book</h4>
       <form className="book-form">
         <div className="space-y-2">
-          <label for="name">Book Name</label>
+          <label htmlFor="name">Book Name</label>
           <input
             required
             className="text-input"
@@ -17,7 +19,7 @@ const BookAdd = () => {
         </div>
 
         <div className="space-y-2">
-          <label for="category">Author</label>
+          <label htmlFor="category">Author</label>
           <input
             required
             className="text-input"
@@ -28,7 +30,7 @@ const BookAdd = () => {
         </div>
 
         <div className="space-y-2">
-          <label for="image">Image Url</label>
+          <label htmlFor="image">Image Url</label>
           <input
             required
             className="text-input"
@@ -40,7 +42,7 @@ const BookAdd = () => {
 
         <div className="grid grid-cols-2 gap-8 pb-4">
           <div className="space-y-2">
-            <label for="price">Price</label>
+            <label htmlFor="price">Price</label>
             <input
               required
               className="text-input"
@@ -51,7 +53,7 @@ const BookAdd = () => {
           </div>
 
           <div className="space-y-2">
-            <label for="quantity">Rating</label>
+            <label htmlFor="quantity">Rating</label>
             <input
               required
               className="text-input"
@@ -71,7 +73,7 @@ const BookAdd = () => {
             name="featured"
             className="w-4 h-4"
           />
-          <label for="featured" className="ml-2 text-sm">
+          <label htmlFor="featured" className="ml-2 text-sm">
             {" "}
             This is a featured book{" "}
           </label>

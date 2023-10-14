@@ -1,2 +1,4 @@
-const BOOK_ADD = "product/bookAdd";
-const BOOK_DELETE = "product/bookDelete";
+const BOOK_ADD = "book/bookAdd";
+const BOOK_DELETE = "book/bookDelete";
+
+export { BOOK_ADD, BOOK_DELETE };
