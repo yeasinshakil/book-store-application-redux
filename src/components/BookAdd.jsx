@@ -1,12 +1,29 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { addBook } from "../redux/products/actions";
 
 const BookAdd = () => {
-  const [bookInfo, setBookInfo] = useState({});
+  const [bookData, setBookData] = useState({});
+  const dispatch = useDispatch();
+
+  const handleChange = (e) => {
+    setBookData({
+      ...bookData,
+      [e.target.name]:
+        e.target.type === "checkbox" ? e.target.checked : e.target.value,
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(addBook(bookData));
+  };
+  // console.log(bookData);
 
   return (
     <div className="p-4 overflow-hidden bg-white shadow-cardShadow rounded-md">
       <h4 className="mb-8 text-xl font-bold text-center">Add New Book</h4>
-      <form className="book-form">
+      <form className="book-form" onSubmit={handleSubmit}>
         <div className="space-y-2">
           <label htmlFor="name">Book Name</label>
           <input
@@ -15,6 +32,7 @@ const BookAdd = () => {
             type="text"
             id="input-Bookname"
             name="name"
+            onChange={handleChange}
           />
         </div>
 
@@ -26,6 +44,7 @@ const BookAdd = () => {
             type="text"
             id="input-Bookauthor"
             name="author"
+            onChange={handleChange}
           />
         </div>
 
@@ -37,6 +56,7 @@ const BookAdd = () => {
             type="text"
             id="input-Bookthumbnail"
             name="thumbnail"
+            onChange={handleChange}
           />
         </div>
 
@@ -49,6 +69,7 @@ const BookAdd = () => {
               type="number"
               id="input-Bookprice"
               name="price"
+              onChange={handleChange}
             />
           </div>
 
@@ -62,6 +83,7 @@ const BookAdd = () => {
               name="rating"
               min="1"
               max="5"
+              onChange={handleChange}
             />
           </div>
         </div>
@@ -72,6 +94,7 @@ const BookAdd = () => {
             type="checkbox"
             name="featured"
             className="w-4 h-4"
+            onChange={handleChange}
           />
           <label htmlFor="featured" className="ml-2 text-sm">
             {" "}

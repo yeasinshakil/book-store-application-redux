@@ -1,8 +1,11 @@
 import React from "react";
 import Book from "./Book";
 import BookAdd from "./BookAdd";
+import { useSelector } from "react-redux";
 
 const BookContainer = () => {
+  const bookState = useSelector((state) => state);
+  console.log(bookState);
   return (
     <main className="py-12 2xl:px-6">
       <div className="container grid xl:grid-cols-[auto_350px] 2xl:grid-cols-[auto_400px] gap-4 2xl:gap-8">
@@ -21,8 +24,9 @@ const BookContainer = () => {
           </div>
           <div className="lws-bookContainer">
             {/* Card 1 */}
-            <Book />
-            <Book />
+            {bookState.map((book, index) => (
+              <Book key={index} book={book} />
+            ))}
           </div>
         </div>
         <div>
