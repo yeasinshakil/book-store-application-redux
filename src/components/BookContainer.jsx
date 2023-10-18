@@ -1,11 +1,17 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Book from "./Book";
 import BookAdd from "./BookAdd";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import fetchBookList from "../redux/thunk/FetchBookList";
 
 const BookContainer = () => {
   const bookState = useSelector((state) => state);
-  console.log(bookState);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchBookList);
+  }, [dispatch]);
+
   return (
     <main className="py-12 2xl:px-6">
       <div className="container grid xl:grid-cols-[auto_350px] 2xl:grid-cols-[auto_400px] gap-4 2xl:gap-8">

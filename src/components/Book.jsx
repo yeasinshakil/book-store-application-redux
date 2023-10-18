@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { deleteBook } from "../redux/products/actions";
+import bookDeleteServer from "../redux/thunk/bookDeleteServer";
 
 const Book = ({ book }) => {
   const disptach = useDispatch();
@@ -24,7 +24,7 @@ const Book = ({ book }) => {
     <div className="book-card">
       <img
         className="h-[240px] w-[170px] object-cover lws-bookThumbnail"
-        src={book.thumbnail}
+        src={book?.thumbnail}
         alt="book"
       />
       <div className="flex-1 h-full pr-2 pt-2 flex flex-col">
@@ -52,7 +52,7 @@ const Book = ({ book }) => {
             </button>
             <button
               className="lws-delete"
-              onClick={() => disptach(deleteBook(book.id))}
+              onClick={() => disptach(bookDeleteServer(book.id))}
             >
               <svg
                 fill="none"
