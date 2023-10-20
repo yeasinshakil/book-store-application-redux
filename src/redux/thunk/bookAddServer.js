@@ -3,19 +3,12 @@ const bookAddServer = (book) => {
   return async (dispatch, getState) => {
     const response = await fetch("http://localhost:9000/books", {
       method: "POST",
-      body: JSON.stringify({
-        name: book.name,
-        author: book.author,
-        thumbnail: book.thumbnail,
-        price: book.price,
-        rating: book.rating,
-        featured: book.featured,
-      }),
+      body: JSON.stringify(book),
       headers: { "content-type": "application/json; charset=UTF-8" },
     });
 
     const books = await response.json();
-    console.log(getState);
+    // console.log(books);
     dispatch(addBook(books));
   };
 };

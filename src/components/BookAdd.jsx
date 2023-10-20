@@ -17,6 +17,14 @@ const BookAdd = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(bookAddServer(bookData));
+    setBookData({
+      name: "",
+      author: "",
+      thumbnail: "",
+      price: "",
+      rating: "",
+      featured: false,
+    });
   };
   // console.log(bookData);
 
