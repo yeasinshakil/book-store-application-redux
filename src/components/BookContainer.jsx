@@ -7,7 +7,7 @@ import fetchBookList from "../redux/thunk/FetchBookList";
 const BookContainer = () => {
   const bookState = useSelector((state) => state.bookList);
   const dispatch = useDispatch();
-  console.log(bookState);
+  // console.log(bookState);
 
   useEffect(() => {
     dispatch(fetchBookList);

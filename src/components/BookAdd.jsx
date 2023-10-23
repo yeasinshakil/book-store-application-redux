@@ -1,10 +1,27 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import bookAddServer from "../redux/thunk/bookAddServer";
+import bookUpdateServer from "../redux/thunk/bookUpdateServer";
 
 const BookAdd = () => {
   const [bookData, setBookData] = useState({});
+  const [selectBookInfo, SetSelectBookInfo] = useState({});
+  const editBookDetails = useSelector((state) => state.editBook);
+  const bookUpdate = useSelector((state) => state.update);
+  // console.log(selectBookInfo);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    SetSelectBookInfo(editBookDetails);
+  }, [bookUpdate, editBookDetails]);
+
+  const handleInputChange = (e) => {
+    SetSelectBookInfo({
+      ...selectBookInfo,
+      [e.target.name]:
+        e.target.type === "checkbox" ? e.target.checked : e.target.value,
+    });
+  };
 
   const handleChange = (e) => {
     setBookData({
@@ -16,21 +33,30 @@ const BookAdd = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(bookAddServer(bookData));
-    setBookData({
-      name: "",
-      author: "",
-      thumbnail: "",
-      price: "",
-      rating: "",
-      featured: false,
-    });
+    if (bookUpdate) {
+      dispatch(bookUpdateServer(selectBookInfo));
+      SetSelectBookInfo({
+        name: "",
+        author: "",
+        thumbnail: "",
+        price: "",
+        rating: "",
+        featured: false,
+      });
+    } else {
+      dispatch(bookAddServer(bookData));
+      setBookData({});
+      console.log(bookData);
+    }
+    // Clear the input fields after submission
   };
-  // console.log(bookData);
+  console.log(bookData);
 
   return (
     <div className="p-4 overflow-hidden bg-white shadow-cardShadow rounded-md">
-      <h4 className="mb-8 text-xl font-bold text-center">Add New Book</h4>
+      <h4 className="mb-8 text-xl font-bold text-center">
+        {bookUpdate ? "Edit Book" : "Add New Book"}
+      </h4>
       <form className="book-form" onSubmit={handleSubmit}>
         <div className="space-y-2">
           <label htmlFor="name">Book Name</label>
@@ -40,7 +66,8 @@ const BookAdd = () => {
             type="text"
             id="input-Bookname"
             name="name"
-            onChange={handleChange}
+            value={selectBookInfo.name}
+            onChange={bookUpdate ? handleInputChange : handleChange}
           />
         </div>
 
@@ -52,7 +79,8 @@ const BookAdd = () => {
             type="text"
             id="input-Bookauthor"
             name="author"
-            onChange={handleChange}
+            value={selectBookInfo.author}
+            onChange={bookUpdate ? handleInputChange : handleChange}
           />
         </div>
 
@@ -64,7 +92,8 @@ const BookAdd = () => {
             type="text"
             id="input-Bookthumbnail"
             name="thumbnail"
-            onChange={handleChange}
+            value={selectBookInfo.thumbnail}
+            onChange={bookUpdate ? handleInputChange : handleChange}
           />
         </div>
 
@@ -77,7 +106,8 @@ const BookAdd = () => {
               type="number"
               id="input-Bookprice"
               name="price"
-              onChange={handleChange}
+              value={selectBookInfo.price}
+              onChange={bookUpdate ? handleInputChange : handleChange}
             />
           </div>
 
@@ -91,7 +121,8 @@ const BookAdd = () => {
               name="rating"
               min="1"
               max="5"
-              onChange={handleChange}
+              value={selectBookInfo.rating}
+              onChange={bookUpdate ? handleInputChange : handleChange}
             />
           </div>
         </div>
@@ -102,7 +133,8 @@ const BookAdd = () => {
             type="checkbox"
             name="featured"
             className="w-4 h-4"
-            onChange={handleChange}
+            checked={selectBookInfo.featured}
+            onChange={bookUpdate ? handleInputChange : handleChange}
           />
           <label htmlFor="featured" className="ml-2 text-sm">
             {" "}
@@ -111,7 +143,7 @@ const BookAdd = () => {
         </div>
 
         <button type="submit" className="submit" id="submit">
-          Add Book
+          {bookUpdate ? "Update Book" : "Add Book"}
         </button>
       </form>
     </div>
