@@ -35,7 +35,9 @@ const BookAdd = () => {
     e.preventDefault();
     if (bookUpdate) {
       dispatch(bookUpdateServer(selectBookInfo));
-      SetSelectBookInfo({
+    } else {
+      dispatch(bookAddServer(bookData));
+      setBookData({
         name: "",
         author: "",
         thumbnail: "",
@@ -43,14 +45,9 @@ const BookAdd = () => {
         rating: "",
         featured: false,
       });
-    } else {
-      dispatch(bookAddServer(bookData));
-      setBookData({});
-      console.log(bookData);
     }
-    // Clear the input fields after submission
   };
-  console.log(bookData);
+  // console.log(bookData);
 
   return (
     <div className="p-4 overflow-hidden bg-white shadow-cardShadow rounded-md">
@@ -66,7 +63,7 @@ const BookAdd = () => {
             type="text"
             id="input-Bookname"
             name="name"
-            value={selectBookInfo.name}
+            value={bookUpdate ? selectBookInfo.name : bookData.name}
             onChange={bookUpdate ? handleInputChange : handleChange}
           />
         </div>
@@ -79,7 +76,7 @@ const BookAdd = () => {
             type="text"
             id="input-Bookauthor"
             name="author"
-            value={selectBookInfo.author}
+            value={bookUpdate ? selectBookInfo.author : bookData.author}
             onChange={bookUpdate ? handleInputChange : handleChange}
           />
         </div>
@@ -92,7 +89,7 @@ const BookAdd = () => {
             type="text"
             id="input-Bookthumbnail"
             name="thumbnail"
-            value={selectBookInfo.thumbnail}
+            value={bookUpdate ? selectBookInfo.thumbnail : bookData.thumbnail}
             onChange={bookUpdate ? handleInputChange : handleChange}
           />
         </div>
@@ -106,7 +103,7 @@ const BookAdd = () => {
               type="number"
               id="input-Bookprice"
               name="price"
-              value={selectBookInfo.price}
+              value={bookUpdate ? selectBookInfo.price : bookData.price}
               onChange={bookUpdate ? handleInputChange : handleChange}
             />
           </div>
@@ -121,7 +118,7 @@ const BookAdd = () => {
               name="rating"
               min="1"
               max="5"
-              value={selectBookInfo.rating}
+              value={bookUpdate ? selectBookInfo.rating : bookData.rating}
               onChange={bookUpdate ? handleInputChange : handleChange}
             />
           </div>
@@ -133,7 +130,7 @@ const BookAdd = () => {
             type="checkbox"
             name="featured"
             className="w-4 h-4"
-            checked={selectBookInfo.featured}
+            checked={bookUpdate ? selectBookInfo.featured : bookData.featured}
             onChange={bookUpdate ? handleInputChange : handleChange}
           />
           <label htmlFor="featured" className="ml-2 text-sm">

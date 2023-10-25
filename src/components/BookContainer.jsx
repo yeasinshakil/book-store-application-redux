@@ -3,11 +3,15 @@ import Book from "./Book";
 import BookAdd from "./BookAdd";
 import { useDispatch, useSelector } from "react-redux";
 import fetchBookList from "../redux/thunk/FetchBookList";
+import { statusChange } from "../redux/books/actions";
 
 const BookContainer = () => {
   const bookState = useSelector((state) => state.bookList);
+  const bookStatus = useSelector((state) => state.status);
   const dispatch = useDispatch();
-  // console.log(bookState);
+  const handleStatusChange = (changeType) => {
+    dispatch(statusChange(changeType));
+  };
 
   useEffect(() => {
     dispatch(fetchBookList);
@@ -21,19 +25,42 @@ const BookContainer = () => {
             <h4 className="mt-2 text-xl font-bold">Book List</h4>
 
             <div className="flex items-center space-x-4">
-              <button className="filter-btn active-filter" id="lws-filterAll">
+              <button
+                className={`filter-btn ${
+                  bookStatus == "all" && "active-filter"
+                }`}
+                id="lws-filterAll"
+                onClick={() => handleStatusChange("all")}
+              >
                 All
               </button>
-              <button className="filter-btn" id="lws-filterFeatured">
+              <button
+                className={`filter-btn ${
+                  bookStatus == "featured" && "active-filter"
+                }`}
+                id="lws-filterFeatured"
+                onClick={() => handleStatusChange("featured")}
+              >
                 Featured
               </button>
             </div>
           </div>
           <div className="lws-bookContainer">
             {/* Card 1 */}
-            {bookState.map((book, index) => (
-              <Book key={index} book={book} />
-            ))}
+
+            {bookState
+              .filter((book) => {
+                switch (bookStatus) {
+                  case "all":
+                    return true;
+
+                  case "featured":
+                    return book.featured;
+                }
+              })
+              .map((book) => (
+                <Book book={book} key={book.id} />
+              ))}
           </div>
         </div>
         <div>

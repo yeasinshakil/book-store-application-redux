@@ -1,7 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import logo from "../images/logo.svg";
+import { useDispatch } from "react-redux";
+import searchTunk from "../redux/thunk/searchThunk";
 
 const Navigation = () => {
+  const [searchValue, setSearchValue] = useState("");
+  const dispatch = useDispatch();
+  const handleChange = (e) => {
+    setSearchValue(e.target.value);
+    dispatch(searchTunk(searchValue));
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
+  // console.log(searchValue);
   return (
     <nav className="py-4 2xl:px-6">
       <div className="container flex items-center justify-between">
@@ -13,7 +25,7 @@ const Navigation = () => {
           <li className="cursor-pointer">My Collection</li>
         </ul>
 
-        <form className="flex items-center">
+        <form className="flex items-center" onSubmit={handleSubmit}>
           <div className="group relative rounded-md bg-white">
             <svg
               width="20"
@@ -32,6 +44,7 @@ const Navigation = () => {
               placeholder="Filter books..."
               className="search"
               id="lws-searchBook"
+              onChange={handleChange}
             />
           </div>
         </form>
